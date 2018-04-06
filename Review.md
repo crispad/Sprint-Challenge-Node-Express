@@ -7,8 +7,7 @@ Node.js is an open source server framework, uses javascript on the server. Javas
 Express is a routing and middleware web framework that has functionality of its own. Series of middleware function calls.
 
 ## Mention two parts of Express that you learned about this week.
-express.json()
-
+Routing and middleware
 
 ## What is Middleware?
 Middleware are functions that have access to the request object and the response object. They help execute any code, make changes to the request and the response objects. 
