@@ -64,4 +64,26 @@ router.put('/:id', (req, res) => {
         });
 });
 
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    actionDb
+        .get(id)
+        .then(response => {
+            action = {...response[0]};
+            actionDb
+                .remove(id)
+                .then(response => {
+                    res.status(200).json(action);
+                })
+                .catch(error => {
+                    res.status(500).json(error);
+                });
+            })
+                .catch(errror => {
+                    res.status(500).json(error);
+                });
+        });
+
+
 module.exports = router;
