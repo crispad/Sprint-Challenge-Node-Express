@@ -43,16 +43,19 @@ router.get('/:id/actions', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const projects = req.body;
+    const project = req.body;
+
+    if (project.name && project.description) {
     
     projectDb
-        .insert(projects)
-        .then(response => {
-            res.status(201).json(response);
+        .insert(project)
+        .then(addedAction => {
+            res.status(201).json(addedAction);
         })
         .catch(error => {
-            res.status(500).json({ error: 'Error posting.' });
+            res.status(500).json({ error: 'Error posting project.' });
         });
+    }
 });
 
 router.put('/:id', (req, res) => {
@@ -65,8 +68,8 @@ router.put('/:id', (req, res) => {
             if (count > 0) {
                 projectDb
                     .get(id)
-                    .then(updatedProjects => {
-                        res.status(200).json(updatedProjects);
+                    .then(project => {
+                        res.status(200).json(project);
                     });
             }else {
                 res.status(404).json({ message: 'Project with this id does not updated.' });
