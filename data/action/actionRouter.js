@@ -16,4 +16,52 @@ router.get('/', (req, res) => {
         });
 });
 
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+
+    actionDb
+        .get(id)
+        .then(action => {
+            res.status(200).json(action);
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Error getting that action.' });
+        });
+});
+
+router.post('/', (req, res) => {
+    const action = req.body;
+
+    actionDb
+        .insert(action)
+        .then(action => {
+            res.status(201).json(action);
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Error posting action.' });
+        });
+});
+
+router.put('/:id', (req, res) => {
+    const { id } = req.params;
+    const update = req.body;
+
+    actionDb
+        .update(id, update)
+        .then(count => {
+            if (count > 0) {
+                actionDb
+                    .get(id)
+                    .then(project => {
+                        res.status(200).json(action);
+                    });
+            }else {
+                res.status(404).json({ message: 'Action with this id does not update.' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json(error);
+        });
+});
+
 module.exports = router;
